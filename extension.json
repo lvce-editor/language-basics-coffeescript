@@ -6,7 +6,7 @@
     {
       "id": "coffeescript",
       "extensions": [".coffee"],
-      "tokenize": "src/tokenizeCoffeescript.js"
+      "tokenize": "src/tokenizeCoffeeScript.js"
     }
   ]
 }
