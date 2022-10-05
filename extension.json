@@ -1,0 +1,12 @@
+{
+  "id": "builtin.language-basics-coffeescript",
+  "name": "Language Basics Coffeescript",
+  "description": "Provides syntax highlighting and bracket matching in Coffeescript files.",
+  "languages": [
+    {
+      "id": "coffeescript",
+      "extensions": [".coffee"],
+      "tokenize": "src/tokenizeCoffeescript.js"
+    }
+  ]
+}
