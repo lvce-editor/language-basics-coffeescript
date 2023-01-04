@@ -4,6 +4,7 @@
 export const State = {
   TopLevelContent: 1,
   InsideDoubleQuoteString: 2,
+  InsideSingleQuoteString: 3,
 }
 
 export const StateMap = {
@@ -44,7 +45,9 @@ const RE_STRING_ESCAPE = /^\\./
 const RE_BACKSLASH_AT_END = /^\\$/
 const RE_ANYTHING = /^.+/s
 const RE_QUOTE_DOUBLE = /^"/
+const RE_QUOTE_SINGLE = /^'/
 const RE_STRING_DOUBLE_QUOTE_CONTENT = /^[^"\\]+/
+const RE_STRING_SINGLE_QUOTE_CONTENT = /^[^'\\]+/
 
 export const initialLineState = {
   state: 1,
@@ -63,8 +66,6 @@ export const tokenizeLine = (line, lineState) => {
   let tokens = []
   let token = TokenType.None
   let state = lineState.state
-  let stringEnd = lineState.stringEnd
-  const knownFunctionNames = new Set(lineState.knownFunctionNames)
   while (index < line.length) {
     const part = line.slice(index)
     switch (state) {
@@ -84,6 +85,9 @@ export const tokenizeLine = (line, lineState) => {
         } else if ((next = part.match(RE_QUOTE_DOUBLE))) {
           token = TokenType.Punctuation
           state = State.InsideDoubleQuoteString
+        } else if ((next = part.match(RE_QUOTE_SINGLE))) {
+          token = TokenType.Punctuation
+          state = State.InsideSingleQuoteString
         } else if ((next = part.match(RE_LINE_COMMENT))) {
           token = TokenType.Comment
           state = State.TopLevelContent
@@ -115,6 +119,23 @@ export const tokenizeLine = (line, lineState) => {
           throw new Error('no')
         }
         break
+      case State.InsideSingleQuoteString:
+        if ((next = part.match(RE_QUOTE_SINGLE))) {
+          token = TokenType.Punctuation
+          state = State.TopLevelContent
+        } else if ((next = part.match(RE_STRING_SINGLE_QUOTE_CONTENT))) {
+          token = TokenType.String
+          state = State.InsideSingleQuoteString
+        } else if ((next = part.match(RE_STRING_ESCAPE))) {
+          token = TokenType.String
+          state = State.InsideSingleQuoteString
+        } else if ((next = part.match(RE_BACKSLASH_AT_END))) {
+          token = TokenType.String
+          state = State.InsideSingleQuoteString
+        } else {
+          throw new Error('no')
+        }
+        break
       default:
         throw new Error('no')
     }
@@ -125,7 +146,5 @@ export const tokenizeLine = (line, lineState) => {
   return {
     state,
     tokens,
-    knownFunctionNames,
-    stringEnd,
   }
 }
