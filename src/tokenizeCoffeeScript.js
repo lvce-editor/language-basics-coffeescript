@@ -77,6 +77,7 @@ const RE_REGEX =
   /^((?:^|[^$\w\xA0-\uFFFF."'\])\s]|\b(?:return|yield))\s*)\/(?:\[(?:[^\]\\\r\n]|\\.)*\]|\\.|[^/\\\[\r\n])+\/[dgimyus]{0,7}(?=(?:\s|\/\*(?:[^*]|\*(?!\/))*\*\/)*(?:$|[\r\n,.;:})\]]|\/\/))/
 const RE_SLASH = /^\//
 const RE_ANYTHING_UNTIL_END = /^.+/s
+const RE_FUNCTION_CALL_NAME = /^[\@\w]+(?=\s*('|\=\s*function|\=\s*\(|\?\(|\())/
 
 export const initialLineState = {
   state: 1,
@@ -165,6 +166,9 @@ export const tokenizeLine = (line, lineState) => {
           state = State.TopLevelContent
         } else if ((next = part.match(RE_PUNCTUATION))) {
           token = TokenType.Punctuation
+          state = State.TopLevelContent
+        } else if ((next = part.match(RE_FUNCTION_CALL_NAME))) {
+          token = TokenType.FunctionName
           state = State.TopLevelContent
         } else if ((next = part.match(RE_VARIABLE_NAME))) {
           token = TokenType.VariableName
