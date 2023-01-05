@@ -23,6 +23,16 @@ export const TokenType = {
   Punctuation: 5,
   Numeric: 6,
   String: 7,
+  LanguageConstant: 8,
+  Keyword: 9,
+  KeywordImport: 215,
+  KeywordControl: 881,
+  KeywordModifier: 882,
+  KeywordReturn: 883,
+  KeywordNew: 884,
+  FunctionName: 885,
+  KeywordThis: 886,
+  KeywordOperator: 887,
 }
 
 export const TokenMap = {
@@ -33,6 +43,16 @@ export const TokenMap = {
   [TokenType.Punctuation]: 'Punctuation',
   [TokenType.Numeric]: 'Numeric',
   [TokenType.String]: 'String',
+  [TokenType.KeywordImport]: 'KeywordImport',
+  [TokenType.KeywordControl]: 'KeywordControl',
+  [TokenType.KeywordModifier]: 'KeywordModifier',
+  [TokenType.KeywordReturn]: 'KeywordReturn',
+  [TokenType.KeywordNew]: 'KeywordNew',
+  [TokenType.FunctionName]: 'Function',
+  [TokenType.KeywordThis]: 'KeywordThis',
+  [TokenType.KeywordOperator]: 'KeywordOperator',
+  [TokenType.LanguageConstant]: 'LanguageConstant',
+  [TokenType.Keyword]: 'Keyword',
 }
 
 const RE_LINE_COMMENT = /^#.*/s
@@ -48,6 +68,8 @@ const RE_QUOTE_DOUBLE = /^"/
 const RE_QUOTE_SINGLE = /^'/
 const RE_STRING_DOUBLE_QUOTE_CONTENT = /^[^"\\]+/
 const RE_STRING_SINGLE_QUOTE_CONTENT = /^[^'\\]+/
+const RE_KEYWORD =
+  /^(?:and|arguments|async|await|break|by|case|catch|class|const|debugger|default|delete|do|else|enum|export|extends|false|finally|for|function|if|implements|import|in|Infinity|instanceof|interface|is|isnt|let|loop|NaN|native|new|no|not|null|of|off|on|or|package|private|protected|public|return|static|super|switch|then|this|throw|try|true|typeof|undefined|unless|var|void|when|while|with|yes)\b/
 
 export const initialLineState = {
   state: 1,
@@ -72,6 +94,61 @@ export const tokenizeLine = (line, lineState) => {
       case State.TopLevelContent:
         if ((next = part.match(RE_WHITESPACE))) {
           token = TokenType.Whitespace
+          state = State.TopLevelContent
+        } else if ((next = part.match(RE_KEYWORD))) {
+          switch (next[0]) {
+            case 'true':
+            case 'false':
+            case 'null':
+            case 'on':
+            case 'off':
+            case 'yes':
+            case 'no':
+              token = TokenType.LanguageConstant
+              break
+            case 'import':
+            case 'export':
+            case 'from':
+              token = TokenType.KeywordImport
+              break
+            case 'as':
+            case 'switch':
+            case 'default':
+            case 'case':
+            case 'else':
+            case 'then':
+            case 'if':
+            case 'break':
+            case 'throw':
+            case 'for':
+            case 'try':
+            case 'catch':
+            case 'finally':
+            case 'while':
+              token = TokenType.KeywordControl
+              break
+            case 'async':
+            case 'await':
+              token = TokenType.KeywordModifier
+              break
+            case 'return':
+              token = TokenType.KeywordReturn
+              break
+            case 'new':
+              token = TokenType.KeywordNew
+              break
+            case 'this':
+              token = TokenType.KeywordThis
+              break
+            case 'delete':
+            case 'typeof':
+            case 'in':
+              token = TokenType.KeywordOperator
+              break
+            default:
+              token = TokenType.Keyword
+              break
+          }
           state = State.TopLevelContent
         } else if ((next = part.match(RE_PUNCTUATION))) {
           token = TokenType.Punctuation
