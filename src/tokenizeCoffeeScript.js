@@ -151,6 +151,7 @@ export const tokenizeLine = (line, lineState) => {
             case 'delete':
             case 'typeof':
             case 'in':
+            case 'instanceof':
             case 'and':
             case 'is':
             case 'isnt':
