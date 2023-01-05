@@ -160,6 +160,9 @@ export const tokenizeLine = (line, lineState) => {
             case 'isnt':
               token = TokenType.KeywordOperator
               break
+            case 'Infinity':
+              token = TokenType.Numeric
+              break
             default:
               token = TokenType.Keyword
               break
