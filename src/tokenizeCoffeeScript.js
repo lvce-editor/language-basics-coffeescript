@@ -135,6 +135,7 @@ export const tokenizeLine = (line, lineState) => {
             case 'finally':
             case 'while':
             case 'when':
+            case 'unless':
               token = TokenType.KeywordControl
               break
             case 'async':
