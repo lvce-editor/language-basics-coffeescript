@@ -132,6 +132,7 @@ export const tokenizeLine = (line, lineState) => {
             case 'catch':
             case 'finally':
             case 'while':
+            case 'when':
               token = TokenType.KeywordControl
               break
             case 'async':
@@ -150,6 +151,9 @@ export const tokenizeLine = (line, lineState) => {
             case 'delete':
             case 'typeof':
             case 'in':
+            case 'and':
+            case 'is':
+            case 'isnt':
               token = TokenType.KeywordOperator
               break
             default:
