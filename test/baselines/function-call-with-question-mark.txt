@@ -1,2 +1,4 @@
 Function
-Text
+Punctuation
+Punctuation
+Punctuation

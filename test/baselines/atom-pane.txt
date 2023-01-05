@@ -144,7 +144,7 @@ Whitespace
 VariableName
 Punctuation
 Whitespace
-Text
+Comment
 NewLine
 NewLine
 Whitespace
@@ -367,7 +367,9 @@ Whitespace
 VariableName
 Punctuation
 Function
-Text
+Punctuation
+Punctuation
+Punctuation
 NewLine
 Whitespace
 VariableName
@@ -397,7 +399,7 @@ Whitespace
 VariableName
 NewLine
 Whitespace
-Text
+Comment
 NewLine
 Whitespace
 VariableName
