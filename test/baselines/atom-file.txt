@@ -233,7 +233,11 @@ Whitespace
 Keyword
 Whitespace
 VariableName
-Text
+Punctuation
+Whitespace
+Keyword
+Whitespace
+VariableName
 NewLine
 Whitespace
 VariableName
