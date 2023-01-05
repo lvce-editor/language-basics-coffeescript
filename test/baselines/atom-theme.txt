@@ -45,8 +45,7 @@ Punctuation
 VariableName
 Punctuation
 Whitespace
-VariableName
-Punctuation
+Text
 NewLine
 Whitespace
 VariableName
@@ -210,8 +209,7 @@ Punctuation
 VariableName
 Punctuation
 Whitespace
-VariableName
-Punctuation
+Text
 NewLine
 Whitespace
 VariableName
@@ -226,8 +224,7 @@ Whitespace
 VariableName
 Punctuation
 Whitespace
-VariableName
-Punctuation
+Text
 NewLine
 Whitespace
 KeywordControl
@@ -255,8 +252,7 @@ Whitespace
 VariableName
 Punctuation
 Whitespace
-VariableName
-Punctuation
+Text
 NewLine
 Whitespace
 KeywordControl
