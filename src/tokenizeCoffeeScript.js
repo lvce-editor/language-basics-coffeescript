@@ -57,7 +57,7 @@ export const TokenMap = {
   [TokenType.Regex]: 'Regex',
 }
 
-const RE_LINE_COMMENT = /^\/\/[^\n]*/
+const RE_LINE_COMMENT = /^#[^\n]*/
 const RE_WHITESPACE = /^\s+/
 const RE_VARIABLE_NAME = /^[\@a-zA-Z\_\-\$][a-zA-Z\_\/\-\$#\d\-]*/
 const RE_PUNCTUATION = /^[:,;\{\}\[\]\.=\(\)<>\!\|\+\&\>\)\?]/
