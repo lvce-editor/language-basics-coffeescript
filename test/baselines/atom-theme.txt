@@ -151,7 +151,7 @@ String
 Punctuation
 Punctuation
 Whitespace
-Keyword
+KeywordControl
 Whitespace
 VariableName
 NewLine
