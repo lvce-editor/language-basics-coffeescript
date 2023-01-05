@@ -33,6 +33,7 @@ export const TokenType = {
   FunctionName: 885,
   KeywordThis: 886,
   KeywordOperator: 887,
+  Regex: 888,
 }
 
 export const TokenMap = {
@@ -53,11 +54,12 @@ export const TokenMap = {
   [TokenType.KeywordOperator]: 'KeywordOperator',
   [TokenType.LanguageConstant]: 'LanguageConstant',
   [TokenType.Keyword]: 'Keyword',
+  [TokenType.Regex]: 'Regex',
 }
 
-const RE_LINE_COMMENT = /^#.*/s
+const RE_LINE_COMMENT = /^\/\/[^\n]*/
 const RE_WHITESPACE = /^\s+/
-const RE_VARIABLE_NAME = /^[\@a-zA-Z\_\/\-\$][a-zA-Z\_\/\-\$#\d\-]*/
+const RE_VARIABLE_NAME = /^[\@a-zA-Z\_\-\$][a-zA-Z\_\/\-\$#\d\-]*/
 const RE_PUNCTUATION = /^[:,;\{\}\[\]\.=\(\)<>\!\|\+\&\>\)]/
 const RE_NUMERIC =
   /^((0(x|X)[0-9a-fA-F]*)|(([0-9]+\.?[0-9]*)|(\.[0-9]+))((e|E)(\+|-)?[0-9]+)?)\b/
@@ -70,6 +72,11 @@ const RE_STRING_DOUBLE_QUOTE_CONTENT = /^[^"\\]+/
 const RE_STRING_SINGLE_QUOTE_CONTENT = /^[^'\\]+/
 const RE_KEYWORD =
   /^(?:and|arguments|async|await|break|by|case|catch|class|const|debugger|default|delete|do|else|enum|export|extends|false|finally|for|function|if|implements|import|in|Infinity|instanceof|interface|is|isnt|let|loop|NaN|native|new|no|not|null|of|off|on|or|package|private|protected|public|return|static|super|switch|then|this|throw|try|true|typeof|undefined|unless|var|void|when|while|with|yes)\b/
+// copied from https://github.com/PrismJS/prism/blob/master/components/prism-javascript.js#L57
+const RE_REGEX =
+  /^((?:^|[^$\w\xA0-\uFFFF."'\])\s]|\b(?:return|yield))\s*)\/(?:\[(?:[^\]\\\r\n]|\\.)*\]|\\.|[^/\\\[\r\n])+\/[dgimyus]{0,7}(?=(?:\s|\/\*(?:[^*]|\*(?!\/))*\*\/)*(?:$|[\r\n,.;:})\]]|\/\/))/
+const RE_SLASH = /^\//
+const RE_ANYTHING_UNTIL_END = /^.+/s
 
 export const initialLineState = {
   state: 1,
@@ -163,6 +170,15 @@ export const tokenizeLine = (line, lineState) => {
         } else if ((next = part.match(RE_NUMERIC))) {
           token = TokenType.Numeric
           state = State.TopLevelContent
+        } else if ((next = part.match(RE_SLASH))) {
+          if ((next = part.match(RE_REGEX))) {
+            token = TokenType.Regex
+            state = State.TopLevelContent
+          } else {
+            next = part.match(RE_SLASH)
+            token = TokenType.Punctuation
+            state = State.TopLevelContent
+          }
         } else if ((next = part.match(RE_QUOTE_DOUBLE))) {
           token = TokenType.Punctuation
           state = State.InsideDoubleQuoteString
