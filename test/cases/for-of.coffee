@@ -1,0 +1,1 @@
+window[key] = value for key, value of items
