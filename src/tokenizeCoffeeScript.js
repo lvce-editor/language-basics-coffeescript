@@ -111,6 +111,7 @@ export const tokenizeLine = (line, lineState) => {
             case 'off':
             case 'yes':
             case 'no':
+            case 'undefined':
               token = TokenType.LanguageConstant
               break
             case 'import':
