@@ -1,0 +1,1 @@
+sortCandidates = (a, b) -> b.score - a.score
