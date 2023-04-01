@@ -60,7 +60,7 @@ export const TokenMap = {
 const RE_LINE_COMMENT = /^#[^\n]*/
 const RE_WHITESPACE = /^\s+/
 const RE_VARIABLE_NAME = /^[\@a-zA-Z\_\$][a-zA-Z\_\/\-\$#\d\-]*/
-const RE_PUNCTUATION = /^[:,;\{\}\[\]\.=\(\)<>\!\|\+\&\>\)\?]/
+const RE_PUNCTUATION = /^[:,;\{\}\[\]\.=\(\)<>\!\|\+\&\>\)\?\-]/
 const RE_NUMERIC =
   /^((0(x|X)[0-9a-fA-F]*)|(([0-9]+\.?[0-9]*)|(\.[0-9]+))((e|E)(\+|-)?[0-9]+)?)\b/
 const RE_STRING_ESCAPE = /^\\./
