@@ -6,8 +6,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "node ./node_modules/@lvce-editor/server/bin/server.js ./test/cases --only-extension=.",
-    "test": "test-syntax-highlighting",
-    "lint": "eslint . && prettier --check ."
+    "lint": "eslint . && prettier --check .",
+    "test": "test-syntax-highlighting"
   },
   "prettier": {
     "semi": false,
