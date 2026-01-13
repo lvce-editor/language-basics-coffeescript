@@ -5,8 +5,11 @@
   "languages": [
     {
       "id": "coffeescript",
-      "extensions": [".coffee"],
+      "extensions": [
+        ".coffee"
+      ],
       "tokenize": "src/tokenizeCoffeeScript.js"
     }
-  ]
+  ],
+  "repository": "https://github.com/lvce-editor/language-basics-coffeescript"
 }
